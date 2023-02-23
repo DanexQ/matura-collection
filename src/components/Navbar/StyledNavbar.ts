@@ -4,6 +4,9 @@ export const NavBackground = styled.nav`
   display: block;
   height: 80px;
   background-color: #fffffe;
+  border: 1px solid #00000010;
+  box-shadow: 0 0 1rem #00000020;
+  padding: 2rem;
 `;
 
 export const NavContainer = styled.div`
@@ -43,6 +46,9 @@ export const NavList = styled.ul`
       color: ${({ theme }) => theme["light"].highlight};
     }
   }
+
+  @media only screen and (max-width: 800px) {
+  }
 `;
 
 export const Button = styled.button`
@@ -51,7 +57,7 @@ export const Button = styled.button`
   cursor: pointer;
 
   svg {
-    font-size: 4rem !important;
+    font-size: 3rem !important;
     transition: color 0.2s;
   }
 

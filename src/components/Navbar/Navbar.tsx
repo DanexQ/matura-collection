@@ -1,6 +1,7 @@
 import { useTheme } from "styled-components";
-import * as S from "./NavbarStyled";
+import * as S from "./StyledNavbar";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import BurgerMenu from "./BurgerMenu";
 
 const Navbar = () => {
   const theme = useTheme();
@@ -17,6 +18,7 @@ const Navbar = () => {
         <S.Button>
           <AccountCircleOutlinedIcon />
         </S.Button>
+        <BurgerMenu />
       </S.NavContainer>
     </S.NavBackground>
   );
