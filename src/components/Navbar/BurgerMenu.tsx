@@ -1,15 +1,13 @@
-import React, { useState } from "react";
 import * as S from "./StyledBurgerMenu";
 
-const BurgerMenu = () => {
-  const [activeMenu, setActiveMenu] = useState<boolean>(false);
+interface BurgerMenuProps {
+  activeMenu: boolean;
+  handleActivateMenu: () => void;
+}
 
-  const handleClick = () => {
-    setActiveMenu((prevState) => !prevState);
-  };
-
+const BurgerMenu = ({ activeMenu, handleActivateMenu }: BurgerMenuProps) => {
   return (
-    <S.BurgerContainer onClick={handleClick}>
+    <S.BurgerContainer onClick={handleActivateMenu}>
       <S.BurgerIcon active={activeMenu} />
     </S.BurgerContainer>
   );

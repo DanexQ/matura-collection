@@ -1,13 +1,21 @@
 import styled from "styled-components";
 
 export const BurgerContainer = styled.div`
-  padding: 1rem 0;
-  width: 25px;
+  --burger-width: 25px;
+  width: var(--burger-width);
+  height: 100%;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media only screen and (min-width: 600px) {
+    display: none;
+  }
 `;
 
 export const BurgerIcon = styled.div<{ active: boolean }>`
-  width: 100%;
+  width: var(--burger-width);
   background-color: ${({ theme, active }) =>
     active ? theme["light"].background : theme["light"].color};
   height: 3px;
