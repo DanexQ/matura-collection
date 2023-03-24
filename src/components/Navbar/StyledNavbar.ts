@@ -69,7 +69,7 @@ export const NavBackground = styled.nav`
   --navbar-font-size: 1.7rem;
   display: block;
   height: 80px;
-  background-color: #fffffe;
+  background-color: #fafafa;
   border: 1px solid #00000010;
   box-shadow: 0 0 1rem #00000020;
   padding: 2rem;
