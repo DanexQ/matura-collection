@@ -13,7 +13,7 @@ const theme = {
     highlight: "#a64ac9",
     formula: {
       old: { font: "#2b2c34", color: "#FAED26" },
-      new: { font: "#fffffe", color: "#a64ac9" },
+      new: { font: "#f0f0f0", color: "#a64ac9" },
     },
     main: "#fffffe",
     secondary: "#e3f6f5",

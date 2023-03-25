@@ -1,19 +1,21 @@
 import styled from "styled-components";
 
 export const TaskContainer = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   font-size: 1.6rem;
-  gap: 1rem;
+  gap: 0.5rem;
+  align-self: stretch;
 `;
 
-export const TaskTitle = styled.div`
-  background-color: ${({ theme }) => theme["light"].formula["old"].color};
+export const TaskTitle = styled.div<{ formulaType: "old" | "new" }>`
+  ${({ theme, formulaType }) => `
+    background-color: ${theme["light"].formula[formulaType].color};
+    color: ${theme["light"].formula[formulaType].font};
+  `}
   padding: 1rem 1rem;
   font-weight: 500;
-  color: ${({ theme }) => theme["light"].formula["old"].font}; ;
 `;
 
 export const TaskContent = styled.div`
@@ -33,7 +35,7 @@ export const TaskBorder = styled.div`
   border: 1px solid #00000020;
 `;
 
-export const AnswerButton = styled.button`
+export const AnswerButton = styled.button<{ formulaType: "old" | "new" }>`
   background-color: #fafafa;
   text-transform: uppercase;
   border: 1px solid #00000020;
@@ -48,9 +50,17 @@ export const AnswerButton = styled.button`
   color: #5a5560;
 
   &:hover {
-    background-color: ${({ theme }) => theme["light"].formula["old"].color};
-    color: ${({ theme }) => theme["light"].formula["old"].font};
+    ${({ theme, formulaType }) => `
+    background-color: ${theme["light"].formula[formulaType].color};
+    color: ${theme["light"].formula[formulaType].font};
+  `}
   }
 `;
 
-export const TaskAnswer = styled.div``;
+export const TaskAnswer = styled.div<{ showAnswer: boolean }>`
+  width: 100%;
+  overflow: hidden;
+  padding: ${({ showAnswer }) => (showAnswer ? "1rem 0" : "0")};
+  transition: all 0.1s;
+  max-height: ${({ showAnswer }) => (showAnswer ? "100px" : "0px")};
+`;

@@ -74,6 +74,7 @@ export const NavBackground = styled.nav`
   box-shadow: 0 0 1rem #00000020;
   padding: 2rem;
   position: sticky;
+  z-index: 1000;
   top: 0;
 `;
 

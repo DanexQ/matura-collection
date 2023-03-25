@@ -1,18 +1,12 @@
-import React from "react";
-import styled from "styled-components";
+import Filters from "./Filters";
 import * as S from "./StyledMain";
-import Task from "./Task";
+import Tasks from "./Tasks";
 
 const Main = () => (
   <S.MainContainer>
-    {/* <Tasks /> */}
-    {/* <Filters /> */}
-    <Task />
+    <Tasks />
+    <Filters />
   </S.MainContainer>
 );
 
 export default Main;
-
-const SomeContent = styled.div`
-  height: 200vh;
-`;
