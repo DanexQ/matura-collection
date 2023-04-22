@@ -1,4 +1,3 @@
-import React from "react";
 import Tasks from "./Tasks";
 import { Filters } from "./StyledFilters";
 import * as S from "./StyledMain";
@@ -7,11 +6,9 @@ import { db } from "../../firebase";
 
 const Main = () => {
   const elo = async () => {
-    const tasksSnapshot = await getDocs(collection(db, "taksk"));
-    console.log(tasksSnapshot);
-    tasksSnapshot.forEach((doc) => {
-      console.log(doc.id);
-    });
+    const tasksRef = collection(db, "tasks");
+    const tasksSnap = await getDocs(tasksRef);
+    tasksSnap.forEach((doc) => console.log(doc.id, doc.data()));
   };
   elo();
 

@@ -4,7 +4,9 @@ import ReactDOM from "react-dom/client";
 import { ThemeProvider } from "styled-components";
 import App from "./App";
 import "./index.css";
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout";
+import AddTaskForm from "./components/AddTaskForm/AddTaskForm";
 const theme = {
   light: {
     background: "#fffffe",
@@ -29,7 +31,14 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <MathJaxContext config={config}>
-        <App />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route path="/" element={<App />} />
+              <Route path="/dodaj-zadanie" element={<AddTaskForm />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </MathJaxContext>
     </ThemeProvider>
   </React.StrictMode>
