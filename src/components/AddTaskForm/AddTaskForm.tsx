@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import * as S from "./StyledAddTaskForm";
 import { collection, setDoc, doc } from "firebase/firestore";
-import { db } from "../../firebase";
-import { FirebaseError } from "firebase/app";
+import { db, storage } from "../../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { v4 } from "uuid";
 
 type taskType = {
   content: string;
@@ -21,6 +22,7 @@ const AddTaskForm = () => {
     points: 0,
   };
   const [task, setTask] = useState(defaultTask);
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
 
   const handleTaskChange: React.ChangeEventHandler<
     HTMLInputElement | HTMLSelectElement
@@ -33,6 +35,18 @@ const AddTaskForm = () => {
     e.preventDefault();
     setTask(defaultTask);
     sendTask(task);
+  };
+
+  const handleUploadImage = async () => {
+    if (uploadedImage === null) return;
+    try {
+      const taskImageRef = ref(storage, `taskImages/${v4()}`);
+      const snapshot = await uploadBytes(taskImageRef, uploadedImage);
+      const url = await getDownloadURL(snapshot.ref);
+      console.log(url);
+    } catch (err) {
+      console.log("Something went wrong");
+    }
   };
 
   const sendTask = async (data: taskType) => {
@@ -86,6 +100,15 @@ const AddTaskForm = () => {
           onChange={handleTaskChange}
           value={task.points}
         />
+        <label htmlFor="image">Zdjęcie</label>
+        <input
+          type="file"
+          name="image"
+          onChange={(e) => setUploadedImage(e.target.files![0])}
+        />
+        <button type="button" onClick={handleUploadImage}>
+          Upload image
+        </button>
         <S.FormButton type="submit">Prześlij zadanie</S.FormButton>
       </S.Form>
     </S.FormContainer>
