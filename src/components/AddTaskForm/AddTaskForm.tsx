@@ -10,7 +10,9 @@ type taskType = {
   answer: string;
   examType: "oficjalna" | "dodatkowa" | "próbna";
   examYear: number;
+  taskType: string;
   points: number;
+  imageUrl?: string;
 };
 
 const AddTaskForm = () => {
@@ -19,6 +21,7 @@ const AddTaskForm = () => {
     answer: "",
     examType: "oficjalna",
     examYear: 2023,
+    taskType: "",
     points: 0,
   };
   const [task, setTask] = useState(defaultTask);
@@ -33,8 +36,8 @@ const AddTaskForm = () => {
 
   const handleFormSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    setTask(defaultTask);
     sendTask(task);
+    setTask(defaultTask);
   };
 
   const handleUploadImage = async () => {
@@ -43,9 +46,9 @@ const AddTaskForm = () => {
       const taskImageRef = ref(storage, `taskImages/${v4()}`);
       const snapshot = await uploadBytes(taskImageRef, uploadedImage);
       const url = await getDownloadURL(snapshot.ref);
-      console.log(url);
+      setTask((prevTask) => ({ ...prevTask, imageUrl: url }));
     } catch (err) {
-      console.log("Something went wrong");
+      console.log("Couldn't upload this image");
     }
   };
 
@@ -53,9 +56,9 @@ const AddTaskForm = () => {
     const newTaskRef = doc(collection(db, "tasks"));
     try {
       await setDoc(newTaskRef, data);
-      alert("Pomyślnie wysłano dane!");
+      alert("Task has been send successfully!");
     } catch (e) {
-      alert("Coś poszło nie tak :<");
+      alert("Couldn't send this task");
     }
   };
 

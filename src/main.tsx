@@ -7,6 +7,7 @@ import "./index.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import AddTaskForm from "./components/AddTaskForm/AddTaskForm";
+import Main from "./components/Main/Main";
 const theme = {
   light: {
     background: "#fffffe",
@@ -34,7 +35,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route path="/" element={<App />} />
+              <Route path="/" element={<Main />} />
               <Route path="/dodaj-zadanie" element={<AddTaskForm />} />
             </Route>
           </Routes>
