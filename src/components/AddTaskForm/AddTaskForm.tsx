@@ -86,7 +86,7 @@ const AddTaskForm = () => {
           <option value="Ciągi">Ciągi</option>
           <option value="Dowody algebraiczne">Dowody algebraiczne</option>
           <option value="Dowody geometryczne">Dowody geometryczne</option>
-          <option value="Równania i nierówności">Nierówności</option>
+          <option value="Nierówności">Nierówności</option>
           <option value="Równania z parametrem">Równania z parametrem</option>
           <option value="Prawdopodobieństwo">Prawdopodobieństwo</option>
           <option value="Kombinatoryka">Kombinatoryka</option>

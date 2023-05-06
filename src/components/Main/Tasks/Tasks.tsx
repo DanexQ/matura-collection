@@ -17,7 +17,14 @@ const Tasks = () => {
   ));
 
   useEffect(() => {
-    getTasks();
+    let ignore = false;
+    if (!ignore) {
+      getTasks();
+    }
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   const getTasks = async () => {

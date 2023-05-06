@@ -18,11 +18,53 @@ export const TaskTop = styled.div`
   gap: 1rem;
 `;
 
-export const TaskTag = styled.div`
+export const TaskTag = styled.div<{ tagType?: string }>`
   background-color: #f4d3ff;
   padding: 0.5rem 1rem;
   color: #c100ff;
   font-size: 1.2rem;
+  ${({ tagType }) => {
+    switch (tagType) {
+      case "Stara":
+        return `background-color: #FFFCAB; color: #D4BA00`;
+      case "Nowa":
+        return `background-color: #f4d3ff; color: #c100ff`;
+      case "Optymalizacja":
+        return `background-color: #C3FFB4; color: #20A100`;
+      case "Stereometria":
+        return `background-color: #A0A6FF; color: #000EE4`;
+      case "Granice":
+        return `background-color: #FFABFE; color: #CA00C7`;
+      case "Trygonometria":
+        return `background-color: #FFA1A1; color: #B00000`;
+      case "Równania trygonometryczne":
+        return `background-color: #FFE5C2; color: #FF9300`;
+      case "Wielomiany":
+        return `background-color: #C5FFFE; color: #00C1BE`;
+      case "Ciągi":
+        return `background-color: #FFA1A1; color: #B00000`;
+      case "Dowody algebraiczne":
+        return `background-color: #DDC8FF; color: #6100FF`;
+      case "Dowody geometryczne":
+        return `background-color: #FFCDB0; color: #E95500`;
+      case "Nierówności":
+        return `background-color: #C4EBFF; color: #0080C1`;
+      case "Równania z parametrem":
+        return `background-color: #FEA7D0; color: #CF0061`;
+      case "Prawdopodobieństwo":
+        return `background-color: #EDBEFF; color: #9B00D5`;
+      case "Kombinatoryka":
+        return `background-color: #9EDB9D; color: #027800`;
+      case "Wartości bezwzględne":
+        return `background-color: #E5A4DA; color: #72005F`;
+      case "Geometria analityczna":
+        return `background-color: #A7ABF5; color: #010785`;
+      case "Planimetria":
+        return `background-color: #DDDE97; color: #7E8000`;
+      default:
+        return `background-color: #DFDFDF; color: #373737`;
+    }
+  }}
 `;
 
 export const TaskPoints = styled.div`
@@ -40,7 +82,7 @@ export const TaskType = styled.div`
   background-color: blue;
 `;
 
-export const AnswerButton = styled.button<{ formulaType: "old" | "new" }>`
+export const AnswerButton = styled.button`
   background-color: #d3efff;
   border: none;
   padding: 0.75rem 1rem;

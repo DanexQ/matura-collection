@@ -21,15 +21,17 @@ const Task = (taskDetails: TaskProps) => {
     setShowAnswer((prevState) => !prevState);
   };
 
-  console.log(taskDetails);
-
   return (
     <S.TaskContainer>
       <S.TaskTop>
-        <S.TaskTag>{taskDetails.formula} Formuła</S.TaskTag>
-        <S.TaskTag>{taskDetails.taskType}</S.TaskTag>
         <S.TaskTag>
           {"Matura " + taskDetails.examType + " " + taskDetails.examYear}{" "}
+        </S.TaskTag>
+        <S.TaskTag tagType={taskDetails.formula}>
+          {taskDetails.formula} Formuła
+        </S.TaskTag>
+        <S.TaskTag tagType={taskDetails.taskType}>
+          {taskDetails.taskType}
         </S.TaskTag>
         <S.TaskPoints>
           Punkty: 0-{taskDetails.points} ({percentages}%)
@@ -43,9 +45,7 @@ const Task = (taskDetails: TaskProps) => {
           <MathJax>Odpowiedź: {taskDetails.answer}</MathJax>
         </S.TaskAnswer>
       </S.TaskContent>
-      <S.AnswerButton onClick={handleClick} formulaType={"old"}>
-        Odpowiedź
-      </S.AnswerButton>
+      <S.AnswerButton onClick={handleClick}>Odpowiedź</S.AnswerButton>
     </S.TaskContainer>
   );
 };
