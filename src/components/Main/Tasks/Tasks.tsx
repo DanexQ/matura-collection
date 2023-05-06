@@ -2,31 +2,35 @@ import * as S from "./StyledTasks";
 import Task from "./Task";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase";
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { TaskProps } from "./Task";
 
-type taskType = {
-  content: string;
-  answer: string;
-  examType: "oficjalna" | "dodatkowa" | "próbna";
-  examYear: number;
-  points: number;
-  imageUrl?: string;
-};
+interface TaskListProps {
+  id: string;
+  details: TaskProps;
+}
 
 const Tasks = () => {
-  const [tasks, setTasks] = useState<taskType[] | null>(null);
-  // const tasksElements = tasks?.forEach(task => <Task taskProps={task})
+  const [tasks, setTasks] = useState<TaskListProps[]>([]);
+  const tasksElements = tasks.map((task) => (
+    <Task key={task.id} {...task.details} />
+  ));
+
+  useEffect(() => {
+    getTasks();
+  }, []);
+
   const getTasks = async () => {
     const tasksRef = collection(db, "tasks");
     const tasksSnap = await getDocs(tasksRef);
-    tasksSnap.forEach((doc) => console.log(doc.id, doc.data()));
+    let taskList: TaskListProps[] = [];
+    tasksSnap.forEach((doc) =>
+      taskList.push({ id: doc.id, details: doc.data() as TaskProps })
+    );
+    setTasks(taskList);
   };
 
-  return (
-    <S.TasksContainer>
-      <Task></Task>
-    </S.TasksContainer>
-  );
+  return <S.TasksContainer>{tasksElements}</S.TasksContainer>;
 };
 
 export default Tasks;

@@ -2,36 +2,45 @@ import * as S from "./StyledTask";
 import MathJax from "better-react-mathjax/MathJax";
 import { useState } from "react";
 
-type TaskType = {
+export type TaskProps = {
   content: string;
   answer: string;
-  formula: "old" | "new";
-  examType: "oficjalna" | "dodatkowa" | "próbna";
+  taskType: string;
+  formula: "Nowa" | "Stara";
+  examType: "Oficjalna" | "Dodatkowa" | "Próbna";
   examYear: number;
   points: number;
   imageUrl?: string;
 };
 
-const Task = () => {
+const Task = (taskDetails: TaskProps) => {
   const [showAnswer, setShowAnswer] = useState<boolean>(false);
+  const percentages = Math.floor((taskDetails.points / 50) * 100);
 
   const handleClick = () => {
     setShowAnswer((prevState) => !prevState);
   };
 
+  console.log(taskDetails);
+
   return (
     <S.TaskContainer>
       <S.TaskTop>
-        <S.TaskTag>Nowa Formuła</S.TaskTag>
-        <S.TaskTag>Optymalizacja</S.TaskTag>
-        <S.TaskPoints>Punkty: 0-7 [{Math.floor((7 / 50) * 100)}%]</S.TaskPoints>
+        <S.TaskTag>{taskDetails.formula} Formuła</S.TaskTag>
+        <S.TaskTag>{taskDetails.taskType}</S.TaskTag>
+        <S.TaskTag>
+          {"Matura " + taskDetails.examType + " " + taskDetails.examYear}{" "}
+        </S.TaskTag>
+        <S.TaskPoints>
+          Punkty: 0-{taskDetails.points} ({percentages}%)
+        </S.TaskPoints>
       </S.TaskTop>
       <S.TaskContent>
         <MathJax style={{ display: "inline-block" }}>
-          Różnica {"`cos^2 165^circ - sin^2 165^circ`"} jest równa:
+          {taskDetails.content}
         </MathJax>
         <S.TaskAnswer showAnswer={showAnswer}>
-          <MathJax>Odpowiedź: {"`frac{sqrt{3}}{2}`"}</MathJax>
+          <MathJax>Odpowiedź: {taskDetails.answer}</MathJax>
         </S.TaskAnswer>
       </S.TaskContent>
       <S.AnswerButton onClick={handleClick} formulaType={"old"}>

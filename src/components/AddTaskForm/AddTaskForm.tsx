@@ -4,30 +4,24 @@ import { collection, setDoc, doc } from "firebase/firestore";
 import { db, storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
-
-type taskType = {
-  content: string;
-  answer: string;
-  examType: "oficjalna" | "dodatkowa" | "próbna";
-  examYear: number;
-  taskType: string;
-  points: number;
-  imageUrl?: string;
-};
+import Task from "../Main/Tasks/Task";
+import { TaskProps } from "../Main/Tasks/Task";
 
 const AddTaskForm = () => {
-  const defaultTask: taskType = {
+  const defaultTask: TaskProps = {
     content: "",
     answer: "",
-    examType: "oficjalna",
-    examYear: 2023,
     taskType: "",
+    formula: "Nowa",
+    examType: "Oficjalna",
+    examYear: 2023,
     points: 0,
   };
   const [task, setTask] = useState(defaultTask);
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+  const [showTask, setShowTask] = useState<boolean>(false);
 
-  const handleTaskChange: React.ChangeEventHandler<
+  const handleChange: React.ChangeEventHandler<
     HTMLInputElement | HTMLSelectElement
   > = (e) => {
     const input = e.currentTarget;
@@ -52,7 +46,7 @@ const AddTaskForm = () => {
     }
   };
 
-  const sendTask = async (data: taskType) => {
+  const sendTask = async (data: TaskProps) => {
     const newTaskRef = doc(collection(db, "tasks"));
     try {
       await setDoc(newTaskRef, data);
@@ -69,38 +63,60 @@ const AddTaskForm = () => {
         <input
           type="text"
           name="content"
-          onChange={handleTaskChange}
+          onChange={handleChange}
           value={task.content}
         />
         <label htmlFor="answer">Odpowiedź:</label>
         <input
           type="text"
           name="answer"
-          onChange={handleTaskChange}
+          onChange={handleChange}
           value={task.answer}
         />
+        <label htmlFor="taskType">Typ zadania:</label>
+        <select name="taskType" onChange={handleChange} value={task.taskType}>
+          <option value="Stereometria">Stereometria</option>
+          <option value="Optymalizacja">Optymalizacja</option>
+          <option value="Granice">Granice</option>
+          <option value="Trygonometria">Trygonometria</option>
+          <option value="Równania trygonometryczne">
+            Równania trygonometryczne
+          </option>
+          <option value="Wielomiany">Wielomiany</option>
+          <option value="Ciągi">Ciągi</option>
+          <option value="Dowody algebraiczne">Dowody algebraiczne</option>
+          <option value="Dowody geometryczne">Dowody geometryczne</option>
+          <option value="Równania i nierówności">Nierówności</option>
+          <option value="Równania z parametrem">Równania z parametrem</option>
+          <option value="Prawdopodobieństwo">Prawdopodobieństwo</option>
+          <option value="Kombinatoryka">Kombinatoryka</option>
+          <option value="Wartości bezwzględne">Wartości bezwzględne</option>
+          <option value="Geometria analityczna">Geometria analityczna</option>
+          <option value="Planimetria">Planimetria</option>
+        </select>
+        <label htmlFor="formula">Formuła:</label>
+        <select name="formula" onChange={handleChange} value={task.formula}>
+          <option value="Nowa">Nowa</option>
+          <option value="Stara">Stara</option>
+        </select>
         <label htmlFor="examType">Typ matury:</label>
-        <select
-          name="examType"
-          onChange={handleTaskChange}
-          value={task.examType}
-        >
-          <option value="oficjalna">Oficjalna</option>
-          <option value="dodatkowa">Dodatkowa</option>
-          <option value="próbna">Próbna</option>
+        <select name="examType" onChange={handleChange} value={task.examType}>
+          <option value="Oficjalna">Oficjalna</option>
+          <option value="Dodatkowa">Dodatkowa</option>
+          <option value="Próbna">Próbna</option>
         </select>
         <label htmlFor="examYear">Rok:</label>
         <input
           type="number"
           name="examYear"
-          onChange={handleTaskChange}
+          onChange={handleChange}
           value={task.examYear}
         />
         <label htmlFor="Punkty">Punkty:</label>
         <input
           type="number"
           name="points"
-          onChange={handleTaskChange}
+          onChange={handleChange}
           value={task.points}
         />
         <label htmlFor="image">Zdjęcie</label>
@@ -114,6 +130,11 @@ const AddTaskForm = () => {
         </button>
         <S.FormButton type="submit">Prześlij zadanie</S.FormButton>
       </S.Form>
+      ZADANIE BĘDZIE WYGLĄDAĆ TAK JAK PONIŻEJ:
+      <button onClick={() => setShowTask((prevVal) => !prevVal)}>
+        Pokaż zadanie
+      </button>
+      {showTask && <Task {...task} />}
     </S.FormContainer>
   );
 };
