@@ -77,7 +77,8 @@ export const TaskContent = styled.div`
   line-height: 2.5rem;
 
   img {
-    fill: white;
+    width: 300px;
+    /* filter: invert(1); */
   }
 `;
 
