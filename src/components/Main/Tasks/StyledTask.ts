@@ -72,7 +72,14 @@ export const TaskPoints = styled.div`
   margin-left: auto;
 `;
 
-export const TaskContent = styled.div``;
+export const TaskContent = styled.div`
+  white-space: pre-line;
+  line-height: 2.5rem;
+
+  img {
+    fill: white;
+  }
+`;
 
 export const TaskType = styled.div`
   display: inline-block;
@@ -124,5 +131,5 @@ export const TaskAnswer = styled.div<{ showAnswer: boolean }>`
   overflow: hidden;
   padding: ${({ showAnswer }) => (showAnswer ? "1rem 0" : "0")};
   transition: all 0.1s;
-  max-height: ${({ showAnswer }) => (showAnswer ? "100px" : "0px")};
+  max-height: ${({ showAnswer }) => (showAnswer ? "1000px" : "0px")};
 `;

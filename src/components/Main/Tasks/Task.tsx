@@ -39,10 +39,15 @@ const Task = (taskDetails: TaskProps) => {
       </S.TaskTop>
       <S.TaskContent>
         <MathJax style={{ display: "inline-block" }}>
-          {taskDetails.content}
+          {taskDetails.content.replaceAll(`/n`, `\n`)}
         </MathJax>
+        {!!taskDetails.imageUrl && (
+          <img src={taskDetails.imageUrl} alt="taskImage" />
+        )}
         <S.TaskAnswer showAnswer={showAnswer}>
-          <MathJax>Odpowiedź: {taskDetails.answer}</MathJax>
+          <MathJax>
+            Odpowiedź: {taskDetails.answer.replaceAll("/n", `\n`)}
+          </MathJax>
         </S.TaskAnswer>
       </S.TaskContent>
       <S.AnswerButton onClick={handleClick}>Odpowiedź</S.AnswerButton>
