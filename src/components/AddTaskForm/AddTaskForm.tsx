@@ -11,7 +11,7 @@ const AddTaskForm = () => {
   const defaultTask: TaskProps = {
     content: "",
     answer: "",
-    taskType: "",
+    taskType: "Stereometria",
     formula: "Nowa",
     examType: "Oficjalna",
     examYear: 2023,
@@ -28,32 +28,33 @@ const AddTaskForm = () => {
     setTask((prevTask) => ({ ...prevTask, [input.name]: input.value }));
   };
 
-  const handleFormSubmit = (e: React.SyntheticEvent) => {
+  const handleFormSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    sendTask(task);
-    setTask(defaultTask);
+    try {
+      if (!!uploadedImage) uploadImageAndTask();
+      else sendTask(task);
+      setTask(defaultTask);
+      alert("task send successfully");
+    } catch (err) {
+      console.log(`Couldn't upload the task!`, err);
+    }
   };
 
-  const handleUploadImage = async () => {
-    if (uploadedImage === null) return;
-    try {
-      const taskImageRef = ref(storage, `taskImages/${v4()}`);
-      const snapshot = await uploadBytes(taskImageRef, uploadedImage);
-      const url = await getDownloadURL(snapshot.ref);
-      setTask((prevTask) => ({ ...prevTask, imageUrl: url }));
-    } catch (err) {
-      console.log("Couldn't upload this image");
-    }
+  const uploadImageAndTask = async () => {
+    const taskImageRef = ref(storage, `taskImages/${v4()}`);
+    const snapshot = await uploadBytes(taskImageRef, uploadedImage!);
+    const url = await getDownloadURL(snapshot.ref);
+    sendTask({ ...task, imageUrl: url });
+  };
+
+  // todo: should always increment the number of certain sent task type
+  const taskTypeQuantity = async () => {
+    const taskTypeRef = doc(collection(db, "taskTypes"));
   };
 
   const sendTask = async (data: TaskProps) => {
     const newTaskRef = doc(collection(db, "tasks"));
-    try {
-      await setDoc(newTaskRef, data);
-      alert("Task has been send successfully!");
-    } catch (e) {
-      alert("Couldn't send this task");
-    }
+    await setDoc(newTaskRef, data);
   };
 
   return (
@@ -125,7 +126,7 @@ const AddTaskForm = () => {
           name="image"
           onChange={(e) => setUploadedImage(e.target.files![0])}
         />
-        <button type="button" onClick={handleUploadImage}>
+        <button type="button" onClick={uploadImageAndTask}>
           Upload image
         </button>
         <S.FormButton type="submit">Prześlij zadanie</S.FormButton>

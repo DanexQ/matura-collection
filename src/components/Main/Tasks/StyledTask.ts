@@ -73,8 +73,12 @@ export const TaskPoints = styled.div`
 `;
 
 export const TaskContent = styled.div`
+  display: flex;
+  flex-direction: column;
   white-space: pre-line;
   line-height: 2.5rem;
+  align-items: center;
+  gap: 1rem;
 
   img {
     width: 300px;
@@ -130,7 +134,6 @@ export const TaskAnswer = styled.div<{ showAnswer: boolean }>`
   width: 100%;
   font-weight: 700;
   overflow: hidden;
-  padding: ${({ showAnswer }) => (showAnswer ? "1rem 0" : "0")};
   transition: all 0.1s;
   max-height: ${({ showAnswer }) => (showAnswer ? "1000px" : "0px")};
 `;
