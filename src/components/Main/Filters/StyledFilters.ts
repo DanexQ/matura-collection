@@ -17,13 +17,17 @@ export const FilterQuantity = styled.span`
 `;
 
 export const Filters = styled.div`
-  display: grid;
+  display: flex;
   flex-direction: column;
-  grid-template-columns: max-content 1fr;
-  gap: 0.5rem;
+  gap: 1rem;
 `;
 
 export const FiltersTitle = styled.h3`
   font-size: 2rem;
   text-transform: uppercase;
+`;
+
+export const FilterElement = styled.div`
+  display: flex;
+  gap: 0.5rem;
 `;

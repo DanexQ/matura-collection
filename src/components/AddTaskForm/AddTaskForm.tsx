@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import * as S from "./StyledAddTaskForm";
-import { collection, setDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  setDoc,
+  doc,
+  updateDoc,
+  increment,
+} from "firebase/firestore";
 import { db, storage } from "../../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
@@ -33,6 +39,7 @@ const AddTaskForm = () => {
     try {
       if (!!uploadedImage) uploadImageAndTask();
       else sendTask(task);
+      taskTypeQuantity(task.taskType);
       setTask(defaultTask);
       alert("task send successfully");
     } catch (err) {
@@ -48,8 +55,9 @@ const AddTaskForm = () => {
   };
 
   // todo: should always increment the number of certain sent task type
-  const taskTypeQuantity = async () => {
-    const taskTypeRef = doc(collection(db, "taskTypes"));
+  const taskTypeQuantity = async (taskType: string) => {
+    const taskTypeRef = doc(db, "taskTypes", taskType);
+    await updateDoc(taskTypeRef, { quantity: increment(1) });
   };
 
   const sendTask = async (data: TaskProps) => {
