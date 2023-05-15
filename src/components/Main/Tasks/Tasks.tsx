@@ -5,7 +5,7 @@ import { db } from "../../../firebase";
 import { useEffect, useLayoutEffect, useState } from "react";
 import { TaskProps } from "./Task";
 
-interface TaskListProps {
+export interface TaskListProps {
   id: string;
   details: TaskProps;
 }

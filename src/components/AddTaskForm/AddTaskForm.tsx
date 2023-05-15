@@ -54,7 +54,6 @@ const AddTaskForm = () => {
     sendTask({ ...task, imageUrl: url });
   };
 
-  // todo: should always increment the number of certain sent task type
   const taskTypeQuantity = async (taskType: string) => {
     const taskTypeRef = doc(db, "taskTypes", taskType);
     await updateDoc(taskTypeRef, { quantity: increment(1) });
